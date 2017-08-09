@@ -1,0 +1,44 @@
+package com.hll.ssm.test;
+
+import java.util.Random;
+import java.util.UUID;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.hll.ssm.bean.Employee;
+import com.hll.ssm.dao.DepartmentMapper;
+import com.hll.ssm.dao.EmployeeMapper;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:applicationContext.xml"})
+public class TestMapper {
+	
+	@Autowired
+	SqlSession sqlSession;
+	
+	@Autowired
+	DepartmentMapper departmentMapper;
+	
+	@Autowired
+	EmployeeMapper employeeMapper;
+	
+	@Test
+	public void testCRUD(){
+//		Department d1 = new Department("财务部");
+//		Department d2 = new Department("采购部");
+//		departmentMapper.insertSelective(d1);
+//		departmentMapper.insertSelective(d2);
+		EmployeeMapper em = sqlSession.getMapper(EmployeeMapper.class);
+		Random r = new Random(47);
+		for(int i = 0; i < 10; i ++){
+			String name = UUID.randomUUID().toString().substring(5);
+			Employee e = new Employee(name,"男",r.nextInt(40) + 10,1);
+			em.insertSelective(e);
+		}
+	}
+}

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.min.js"></script>
+</head>
+<body>
+	<script type="text/javascript">
+		var a;
+		f1();
+		f2();
+		function f1(){
+			alert("I am coming");
+		}
+		function f2(){
+			a = 200;
+			alert(a);
+		}
+		
+		
+	</script>
+</body>
+</html>

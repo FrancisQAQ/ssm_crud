@@ -1,0 +1,73 @@
+package com.hll.ssm.test;
+
+import java.util.Date;
+import java.util.List;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import com.hll.ssm.bean.Employee;
+import com.hll.ssm.bean.EmployeeExample;
+import com.hll.ssm.bean.EmployeeExample.Criteria;
+import com.hll.ssm.dao.DepartmentMapper;
+import com.hll.ssm.dao.EmployeeMapper;
+import com.hll.ssm.service.EmployeeService;
+
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations={"classpath:applicationContext.xml"})
+public class TestMapper {
+	
+	@Autowired
+	SqlSession sqlSession;
+	
+	@Autowired
+	DepartmentMapper departmentMapper;
+	
+	@Autowired
+	EmployeeMapper employeeMapper;
+	
+	@Autowired
+	EmployeeService es;
+	
+//	@Test
+//	public void testCRUD(){
+////		Department d1 = new Department("财务部");
+////		Department d2 = new Department("采购部");
+////		departmentMapper.insertSelective(d1);
+////		departmentMapper.insertSelective(d2);
+//		EmployeeMapper em = sqlSession.getMapper(EmployeeMapper.class);
+//		Random r = new Random(47);
+//		for(int i = 0; i < 55; i ++){
+//			String name = UUID.randomUUID().toString().substring(0,5);
+//			String str = i%2 == 0 ? "M" :"F";
+//			int j = i%2 == 0 ? 1 :2;
+//			Employee e = new Employee(name,str,name + "@qq.com",j);
+//			em.insertSelective(e);
+//		}
+//		System.out.println("Finish");
+//	}
+	
+	@Test
+	public void testSave(){
+		//Employee e = new Employee("Francis","M","Francis" + "@qq.com",1);
+		Employee e = new Employee();
+		e.setEmpName("Francis02");
+		es.saveEmp(e);
+	}
+	
+	@Test
+	public void testIndex(){
+		Date startTime = new Date();
+		EmployeeExample ee = new EmployeeExample();
+		Criteria criteria = ee.createCriteria();
+		criteria.andEmpEmailEqualTo("Francis@qq.com");
+		List<Employee> employees = employeeMapper.selectByExample(ee);
+		Date endTime = new Date();
+		long result =  endTime.getTime() -startTime.getTime();
+		System.out.println(result);
+	}
+}
